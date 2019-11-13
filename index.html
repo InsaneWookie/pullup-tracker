@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<div id="add_user_component"></div>
+
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDS90bjkZauNIG5gY1zNyGvl-IUKVYQ1LU",
+        authDomain: "kitomba-chinups.firebaseapp.com",
+        databaseURL: "https://kitomba-chinups.firebaseio.com",
+        projectId: "kitomba-chinups",
+        storageBucket: "kitomba-chinups.appspot.com",
+        messagingSenderId: "894735738664",
+        appId: "1:894735738664:web:f8a84926e3a14496c3d21d"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+
+</script>
+
+<!-- Load our React component. -->
+<script type="text/babel" >
+    'use strict';
+
+    const e = React.createElement;
+
+    class AddUser extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: "",
+                weight: 0,
+                users: []
+            };
+
+            this.handleChange = this.handleChange.bind(this);
+            this.handleChangeWeight = this.handleChangeWeight.bind(this);
+
+
+        }
+
+        componentDidMount() {
+            db.collection("users")
+              .onSnapshot((querySnapshot) => {
+                  let users = [];
+                  querySnapshot.forEach(function(doc) {
+                      users.push(doc.data());
+                  });
+                  console.log(users);
+                  this.setState({users: users});
+              });
+        }
+
+        addUser(){
+            db.collection("users").add({
+                name: this.state.name,
+                weight: this.state.weight
+            }).then(docRef => console.log("Document written with ID: ", docRef.id))
+              .catch(error => { console.error("Error adding document: ", error); });
+        }
+
+        handleChange(event) {
+            this.setState({name: event.target.value});
+        }
+
+        handleChangeWeight(event) {
+            this.setState({weight: event.target.value});
+        }
+
+
+
+        render() {
+            return (
+              <form onSubmit={(event) => event.preventDefault()}>
+                  <label>
+                      <input value={this.state.name} onChange={this.handleChange} />
+                  </label>
+                  <br />
+                  <label>
+                      <input value={this.state.weight} onChange={this.handleChangeWeight} />
+                  </label>
+
+                  <button onClick={() => this.addUser()}>
+                      Add
+                  </button>
+
+                  <div>
+                      {this.state.users.map((item) => (
+                        <div key={item.name}>{item.name} - {item.weight}</div>
+                      ))}
+                  </div>
+              </form>
+            );
+        }
+    }
+
+
+
+    const domContainer = document.querySelector('#add_user_component');
+    ReactDOM.render(e(AddUser), domContainer);
+</script>
+
+<body>
+
+</body>
+</html>
