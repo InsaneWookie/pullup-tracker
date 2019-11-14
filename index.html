@@ -12,7 +12,12 @@
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
 <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.development.js" crossorigin="anonymous"></script>
 
+<!-- Fonts to support Material Design -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+<!-- Icons to support Material Design -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
@@ -22,6 +27,16 @@
 <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-firestore.js"></script>
 
 <script>
+
+    const {
+        Button,
+        TextField,
+        ThemeProvider,
+        Typography,
+        Container,
+        Link,
+    } = MaterialUI;
+
     // Your web app's Firebase configuration
     var firebaseConfig = {
         apiKey: "AIzaSyDS90bjkZauNIG5gY1zNyGvl-IUKVYQ1LU",
