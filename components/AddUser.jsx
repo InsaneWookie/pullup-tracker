@@ -76,11 +76,14 @@ class AddUser extends React.Component {
 
               <hr/>
 
+              <User/>
               <div>
                   {this.state.users.map((item) => (
                     <div key={item.name}>{item.name} - {item.weight}</div>
                   ))}
               </div>
+
+
           </form>
         );
     }
