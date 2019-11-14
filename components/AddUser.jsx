@@ -29,7 +29,7 @@ class AddUser extends React.Component {
     }
 
     addUser() {
-        db.collection("users").add({
+        db.collection("users").doc(this.state.name).set({
             name: this.state.name,
             weight: this.state.weight
         }).then(docRef => console.log("Document written with ID: ", docRef.id))
