@@ -84,11 +84,13 @@ class AddUser extends React.Component {
               <hr/>
 
               <User/>
-              <div>
+              <List >
                   {this.state.users.map((item) => (
-                      <ListItem  key={item.name} onClick={() => this.updateUserInfo(item.name, item.weight)}>{item.name} - {item.weight} </ListItem >
+                    <ListItem key={item.name} button onClick={() => this.updateUserInfo(item.name, item.weight)}>
+                        <ListItemText>{item.name} - {item.weight}KG</ListItemText>
+                    </ListItem >
                   ))}
-              </div>
+              </List>
 
 
           </form>
