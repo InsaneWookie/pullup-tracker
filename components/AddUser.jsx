@@ -62,7 +62,7 @@ class AddUser extends React.Component {
               <TextField
                 margin="dense"
                 variant="outlined"
-                label="Weight"
+                label="Weight (KG)"
                 value={this.state.weight}
                 onChange={this.handleChangeWeight}
                 /*style={{"marginLeft":"10px"}}*//>
