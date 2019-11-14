@@ -28,7 +28,7 @@ class AddUser extends React.Component {
           });
     }
 
-    addUser() {
+    updateUser() {
         db.collection("users").doc(this.state.name).set({
             name: this.state.name,
             weight: this.state.weight
@@ -46,6 +46,9 @@ class AddUser extends React.Component {
         this.setState({weight: event.target.value});
     }
 
+    updateUserInfo(name, weight) {
+        this.setState({name: name, weight: weight});
+    }
 
     render() {
         return (
@@ -74,8 +77,8 @@ class AddUser extends React.Component {
 
               <br/>
 
-              <Button variant="contained" color="primary" onClick={() => this.addUser()}>
-                  Add
+              <Button variant="contained" color="primary" onClick={() => this.updateUser()}>
+                  Add/Update
               </Button>
 
               <hr/>
@@ -83,7 +86,7 @@ class AddUser extends React.Component {
               <User/>
               <div>
                   {this.state.users.map((item) => (
-                    <div key={item.name}><Link href="#"  onClick={l => {console.log(item); this.handleClickOpen()}}>{item.name} - {item.weight}</Link></div>
+                      <ListItem  key={item.name} onClick={() => this.updateUserInfo(item.name, item.weight)}>{item.name} - {item.weight} </ListItem >
                   ))}
               </div>
 
