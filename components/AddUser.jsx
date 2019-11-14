@@ -4,21 +4,24 @@ class AddUser extends React.Component {
         this.state = {
             name: "",
             weight: "",
-            users: []
+            users: [],
+            dialogOpen: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeWeight = this.handleChangeWeight.bind(this);
-
-
+        this.handleClose = this.handleClose.bind(this);
     }
+
 
     componentDidMount() {
         db.collection("users")
           .onSnapshot((querySnapshot) => {
               let users = [];
               querySnapshot.forEach(function (doc) {
-                  users.push(doc.data());
+                  let user = doc.data();
+                  user._id = doc.id;
+                  users.push(user);
               });
               console.log(users);
               this.setState({users: users});
@@ -46,6 +49,7 @@ class AddUser extends React.Component {
 
     render() {
         return (
+          <div>
           <form onSubmit={(event) => event.preventDefault()}>
 
               <TextField
@@ -79,12 +83,26 @@ class AddUser extends React.Component {
               <User/>
               <div>
                   {this.state.users.map((item) => (
-                    <div key={item.name}>{item.name} - {item.weight}</div>
+                    <div key={item.name}><Link href="#"  onClick={l => {console.log(item); this.handleClickOpen()}}>{item.name} - {item.weight}</Link></div>
                   ))}
               </div>
 
 
           </form>
+              <UserDialog  onClose={this.handleClose} open={this.state.dialogOpen}  />
+          </div>
         );
     }
+
+
+
+    handleClickOpen()  {
+        this.setState({dialogOpen: true});
+        console.log("open");
+    };
+
+     handleClose(value) {
+         console.log("close");
+         this.setState({dialogOpen: false});
+    };
 }
