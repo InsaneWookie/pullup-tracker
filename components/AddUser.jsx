@@ -47,16 +47,24 @@ class AddUser extends React.Component {
         return (
           <form onSubmit={(event) => event.preventDefault()}>
               <label>
-                  <input value={this.state.name} onChange={this.handleChange} />
+                  Name
+                  <input id="name" value={this.state.name} onChange={this.handleChange} style={{"margin-left":"10px"}}/>
               </label>
+
               <br />
+              <div style={{"margin-top":"5px"}}></div>
               <label>
-                  <input value={this.state.weight} onChange={this.handleChangeWeight} />
+                  Weight
+                  <input value={this.state.weight} onChange={this.handleChangeWeight} style={{"margin-left":"10px"}}/>
               </label>
+
+              <br />
 
               <button onClick={() => this.addUser()}>
                   Add
               </button>
+
+              <hr />
 
               <div>
                   {this.state.users.map((item) => (
