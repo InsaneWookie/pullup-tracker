@@ -87,7 +87,16 @@ class AddUser extends React.Component {
               <List >
                   {this.state.users.map((item) => (
                     <ListItem key={item.name} button onClick={() => this.updateUserInfo(item.name, item.weight)}>
-                        <ListItemText>{item.name} - {item.weight}KG</ListItemText>
+
+                        <ListItemText>{item.name} - {item.weight}KG </ListItemText>
+                        <ListItemSecondaryAction onClick={() => this.handleClickOpen()} >
+                            <IconButton edge="end" aria-label="delete"  color="primary">
+                                <Icon>addcircle</Icon>
+                                {/*<DeleteIcon />*/}
+                                {/*<Button onClick={this.handleClickOpen()} > + </Button>*/}
+
+                            </IconButton>
+                        </ListItemSecondaryAction>
                     </ListItem >
                   ))}
               </List>
