@@ -1,4 +1,6 @@
-### How to develop locally
+## How to develop locally
+
+### If node installed
 
 Install local web server  
 `npm install http-server -g`
@@ -6,5 +8,9 @@ Install local web server
 Start server  
 `http-server -p 8080 -c-1`
 
-Visit  
+### If Docker installed 
+`docker run --rm --name some-nginx -p 8080:80 -v $(pwd):/usr/share/nginx/html:ro nginx`
+
+
+### Then Visit  
 `http://localhost:8080/index.html`

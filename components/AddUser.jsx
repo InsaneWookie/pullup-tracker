@@ -5,7 +5,8 @@ class AddUser extends React.Component {
             name: "",
             weight: "",
             users: [],
-            dialogOpen: false
+            dialogOpen: false,
+            selectedUser: {}
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -29,13 +30,20 @@ class AddUser extends React.Component {
     }
 
     updateUser() {
-        db.collection("users").doc(this.state.name).set({
+
+        let userData = {
             name: this.state.name,
-            weight: this.state.weight
-        }).then(docRef => console.log("Document written with ID: ", docRef.id))
-          .catch(error => {
-              console.error("Error adding document: ", error);
-          });
+            weight: this.state.weight           
+        };
+
+        if(!this.state.users.find(u => u.name === this.state.name)){
+            //we didn't find the user so must be creating a new one so set the reps to 0
+            userData.count = 0;
+        }
+
+        db.collection("users").doc(this.state.name).set(userData, {merge: true})
+        .then(docRef => console.log("Document written with ID: ", docRef.id))
+        .catch(error => { console.error("Error adding document: ", error); });
     }
 
     handleChange(event) {
@@ -52,7 +60,7 @@ class AddUser extends React.Component {
 
     render() {
         return (
-          <div>
+        <Container maxWidth="sm">
           <form onSubmit={(event) => event.preventDefault()}>
 
               <TextField
@@ -88,14 +96,11 @@ class AddUser extends React.Component {
                   {this.state.users.map((item) => (
                     <ListItem key={item.name} button onClick={() => this.updateUserInfo(item.name, item.weight)}>
 
-                        <ListItemText>{item.name} - {item.weight}KG </ListItemText>
-                        <ListItemSecondaryAction onClick={() => this.handleClickOpen()} >
-                            <IconButton edge="end" aria-label="delete"  color="primary">
+                        <ListItemText>{item.name} - {item.weight} KG - Total reps: {item.count}</ListItemText>
+                        <ListItemSecondaryAction onClick={() => this.handleClickOpen(item)} >
+                            <Button variant="contained" color="primary">
                                 <Icon>addcircle</Icon>
-                                {/*<DeleteIcon />*/}
-                                {/*<Button onClick={this.handleClickOpen()} > + </Button>*/}
-
-                            </IconButton>
+                            </Button>
                         </ListItemSecondaryAction>
                     </ListItem >
                   ))}
@@ -103,15 +108,16 @@ class AddUser extends React.Component {
 
 
           </form>
-              <UserDialog  onClose={this.handleClose} open={this.state.dialogOpen}  />
-          </div>
+              <UserDialog  onClose={this.handleClose} open={this.state.dialogOpen} user={this.state.selectedUser}  />
+          </Container>
         );
     }
 
 
 
-    handleClickOpen()  {
-        this.setState({dialogOpen: true});
+    handleClickOpen(user)  {
+        this.setState({dialogOpen: true, selectedUser: user});
+        console.log(user);
         console.log("open");
     };
 
