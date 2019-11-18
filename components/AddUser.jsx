@@ -86,7 +86,7 @@ class AddUser extends React.Component {
               <br/>
 
               <Button variant="contained" color="primary" onClick={() => this.updateUser()}>
-                  Add/Update
+                  Add/Update changed
               </Button>
 
               <hr/>

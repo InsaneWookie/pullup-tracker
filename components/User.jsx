@@ -19,6 +19,7 @@ class User extends React.Component {
           .get().then((doc) => {
               console.log(doc.data());
           });
+
     }
 
 
