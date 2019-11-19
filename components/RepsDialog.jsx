@@ -47,7 +47,7 @@ class RepsDialog extends React.Component {
         const currentCount = this.state.count;
 
         let newReps = {
-            userId: this.props.user.name,
+            userId: this.props.user._id,
             count: currentCount,
             time: new Date()
         };
@@ -58,7 +58,7 @@ class RepsDialog extends React.Component {
               console.error("Error adding reps document: ", error);
           });
 
-        db.collection("users").doc(this.props.user.name)
+        db.collection("users").doc(this.props.user._id)
           .update({count: this.props.user.count + currentCount})
           .then(() => console.log("Document successfully updated!"))
           .catch(error => {

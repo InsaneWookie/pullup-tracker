@@ -67,21 +67,6 @@ class Main extends React.Component {
     render() {
         return (
           <Container >
-
-              {/*<List >*/}
-              {/*    {this.state.users.map((item) => (*/}
-              {/*      <ListItem key={item.name} button onClick={() => this.updateUserInfo(item.name, item.weight)}>*/}
-
-              {/*          <ListItemText>{item.name} - {item.weight} KG - Total reps: {item.count}</ListItemText>*/}
-              {/*          <ListItemSecondaryAction onClick={() => this.handleClickOpen(item)} >*/}
-              {/*              <Button variant="contained" color="primary">*/}
-              {/*                  <Icon>addcircle</Icon>*/}
-              {/*              </Button>*/}
-              {/*          </ListItemSecondaryAction>*/}
-              {/*      </ListItem >*/}
-              {/*    ))}*/}
-              {/*</List>*/}
-
               <Grid container spacing={1}>
                   {this.state.users.map((user) => (
                     <Grid key={user.name} item xs={3}>
@@ -110,11 +95,9 @@ class Main extends React.Component {
     handleClickOpen(user) {
         this.setState({dialogOpen: true, selectedUser: user});
         console.log(user);
-        console.log("open");
     };
 
     handleClose(value) {
-        console.log("close");
         this.setState({dialogOpen: false});
     };
 
@@ -122,7 +105,6 @@ class Main extends React.Component {
     handleUserDialogOpen(user) {
         this.setState({userDialogOpen: true});
         console.log(user);
-        console.log("open");
     };
 
     handleUserDialogClose(){

@@ -32,19 +32,27 @@ class UserDialog extends React.Component {
 
         let userData = {
             name: this.state.name,
-            weight: this.state.weight
+            weight: parseInt(this.state.weight)
         };
 
         const existingUsers = this.props.existingUsers;
+        const existingUser = existingUsers.find(u => u.name === this.state.name);
 
-        if(!existingUsers.find(u => u.name === this.state.name)){
+        if(!existingUser){
             //we didn't find the user so must be creating a new one so set the reps to 0
             userData.count = 0;
+
+            db.collection("users").doc().set(userData, {merge: true})
+              .then(() => console.log("User added"))
+              .catch(error => { console.error("Error adding document: ", error); });
+        } else {
+            db.collection("users").doc(existingUser._id).set(userData, {merge: true})
+              .then(() => console.log("User updated"))
+              .catch(error => { console.error("Error adding document: ", error); });
         }
 
-        db.collection("users").doc(this.state.name).set(userData, {merge: true})
-          .then(docRef => console.log("Document written with ID: ", docRef.id))
-          .catch(error => { console.error("Error adding document: ", error); });
+
+
     }
 
     handleChange(event) {
@@ -63,7 +71,7 @@ class UserDialog extends React.Component {
         return (
 
             <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.props.open}>
-                <DialogTitle id="simple-dialog-title">Add/Update User</DialogTitle>
+                <DialogTitle id="simple-dialog-title">Add</DialogTitle>
                 <DialogContent>
                     <form onSubmit={(event) => event.preventDefault()}>
                         <TextField
