@@ -9,7 +9,7 @@
 <div id="add_user_component"></div>
 
 <!-- This is needed to get the live reload to work. Its a special file serviced by webpack dev server -->
-<script type="text/babel" src="main.js"></script>
+<script src="main.js"></script>
 
 <!-- Load React. -->
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -38,6 +38,9 @@
         ThemeProvider,
         Typography,
         Container,
+        Card,
+        CardContent,
+        CardActions,
         Link,
         Dialog,
         DialogTitle,
@@ -51,7 +54,10 @@
         IconButton,
         Icon,
         Grid,
-        Fab
+        Fab,
+        Avatar,
+        makeStyles,
+        withStyles
     } = MaterialUI;
 
     // Your web app's Firebase configuration
@@ -72,8 +78,10 @@
 </script>
 
 <!-- Load our React component. -->
+<script type="text/babel" src="components/Main.jsx"> </script>
 <script type="text/babel" src="components/AddUser.jsx"> </script>
 <script type="text/babel" src="components/User.jsx"> </script>
+<script type="text/babel" src="components/RepsDialog.jsx"> </script>
 <script type="text/babel" src="components/UserDialog.jsx"> </script>
 
 <script type="text/babel" >
@@ -81,8 +89,18 @@
 
     const e = React.createElement;
 
+
+    const styles = theme => ({
+        fab: {
+            position: 'fixed',
+            // bottom: theme.spacing(2),
+            // right: theme.spacing(2),
+        },
+    });
+
+
     const domContainer = document.querySelector('#add_user_component');
-    ReactDOM.render(e(AddUser), domContainer);
+    ReactDOM.render(e(Main), domContainer);
     // ReactDOM.render(e(User), domContainer);
 </script>
 
