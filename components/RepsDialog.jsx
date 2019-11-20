@@ -44,11 +44,11 @@ class RepsDialog extends React.Component {
 
     handleSave() {
 
-        const currentCount = this.state.count;
+        const currentSelectedCount = this.state.count;
 
         let newReps = {
             userId: this.props.user._id,
-            count: currentCount,
+            count: currentSelectedCount,
             time: new Date()
         };
 
@@ -58,8 +58,12 @@ class RepsDialog extends React.Component {
               console.error("Error adding reps document: ", error);
           });
 
+        const startOfWeekKey = DateHelper.getStartOfWeekKey();
+        const key = `weekCount.${startOfWeekKey}`;
+        const currentWeekCount = this.props.user.weekCount[startOfWeekKey] ? this.props.user.weekCount[startOfWeekKey] : 0;
+        const updatedWeekCount = currentWeekCount + currentSelectedCount;
         db.collection("users").doc(this.props.user._id)
-          .update({count: this.props.user.count + currentCount})
+          .update({[key]: updatedWeekCount})
           .then(() => console.log("Document successfully updated!"))
           .catch(error => {
               console.error("Error updating user document: ", error);

@@ -28,6 +28,8 @@ class UserDialog extends React.Component {
         this.handleClose();
     }
 
+
+
     updateUser() {
 
         let userData = {
@@ -40,7 +42,9 @@ class UserDialog extends React.Component {
 
         if(!existingUser){
             //we didn't find the user so must be creating a new one so set the reps to 0
-            userData.count = 0;
+            const key = DateHelper.getStartOfWeekKey();
+            userData.weekCount = {};
+            userData.weekCount[key] = 0;
 
             db.collection("users").doc().set(userData, {merge: true})
               .then(() => console.log("User added"))

@@ -50,7 +50,7 @@ class User extends React.Component {
                               </Grid>
                               <Grid item xs align="center">
                                   <Typography gutterBottom variant="h3" component="h2">
-                                      {this.props.user.count}
+                                      {this.props.user.weekCount[this.props.selectedWeek] ? this.props.user.weekCount[this.props.selectedWeek ] : 0}
                                   </Typography>
                               </Grid>
 

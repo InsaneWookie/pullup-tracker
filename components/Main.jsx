@@ -7,7 +7,8 @@ class Main extends React.Component {
             users: [],
             dialogOpen: false,
             userDialogOpen: false,
-            selectedUser: {}
+            selectedUser: {},
+            selectedWeek: DateHelper.getStartOfWeekKey()
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -69,8 +70,8 @@ class Main extends React.Component {
           <Container >
               <Grid container spacing={1}>
                   {this.state.users.map((user) => (
-                    <Grid key={user.name} item xs={3}>
-                        <User user={user} onClickAddReps={() => this.handleClickOpen(user)}/>
+                    <Grid key={user.name} item xs={12} sm={4} lg={3}>
+                        <User user={user} onClickAddReps={() => this.handleClickOpen(user)} selectedWeek={this.state.selectedWeek}/>
                     </Grid>
                   ))}
 
