@@ -26,6 +26,14 @@ class User extends React.Component {
         this.props.onClickAddReps();
     }
 
+    getTotalCount() {
+        let count  = 0;
+        for (var week in this.props.user.weekCount) {
+            count += this.props.user.weekCount[week] ? this.props.user.weekCount[week] : 0;
+        }
+
+        return count;
+    }
 
     render() {
         return (
@@ -52,6 +60,9 @@ class User extends React.Component {
                                   <Typography gutterBottom variant="h3" component="h2">
                                       {this.props.user.weekCount[this.props.selectedWeek] ? this.props.user.weekCount[this.props.selectedWeek ] : 0}
                                   </Typography>
+                                  <Typography gutterBottom variant="h6" component="h2">
+                                      total {this.getTotalCount()}
+                                  </Typography>
                               </Grid>
 
                           </Grid>
@@ -61,8 +72,9 @@ class User extends React.Component {
 
               </CardContent>
               <CardActions>
+                  <div style={{marginLeft: 'auto'}}/>
                   <Button onClick={() => this.handleAddRepsClick()}>
-                      Add Reps
+                      <Icon>add</Icon>
                   </Button>
               </CardActions>
           </Card>
