@@ -29,6 +29,11 @@ class Main extends React.Component {
                   user._id = doc.id;
                   users.push(user);
               });
+              users.sort((user1, user2) => {
+                  let user1Count = typeof user1.weekCount[this.state.selectedWeek] !== 'undefined' ? user1.weekCount[this.state.selectedWeek] : 0;
+                  let user2Count = typeof user2.weekCount[this.state.selectedWeek] !== 'undefined' ? user2.weekCount[this.state.selectedWeek] : 0;
+                  return user2Count - user1Count;
+              });
               console.log(users);
               this.setState({users: users});
           });
