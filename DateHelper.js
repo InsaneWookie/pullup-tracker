@@ -13,4 +13,9 @@ class DateHelper {
         const startOfWeek = DateHelper.getMonday(new Date());
         return startOfWeek.getFullYear() +  "-" + (startOfWeek.getMonth() + 1) + "-"+ startOfWeek.getDate();
     }
+
+    static getPreviousWeekKey(){
+        const startOfWeek = DateHelper.getMonday(new Date());
+        return startOfWeek.getFullYear() +  "-" + (startOfWeek.getMonth() + 1) + "-"+ (startOfWeek.getDate() - 7);
+    }
 }

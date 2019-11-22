@@ -35,6 +35,11 @@ class User extends React.Component {
         return count;
     }
 
+    getPreviousWeek() {
+        let previousWeek = DateHelper.getPreviousWeekKey()
+        return this.props.user.weekCount[previousWeek] ? this.props.user.weekCount[previousWeek] : 0;
+    }
+
     render() {
         return (
           <Card>
@@ -60,13 +65,23 @@ class User extends React.Component {
                                   <Typography gutterBottom variant="h3" component="h2">
                                       {this.props.user.weekCount[this.props.selectedWeek] ? this.props.user.weekCount[this.props.selectedWeek ] : 0}
                                   </Typography>
-                                  <Typography gutterBottom variant="h6" component="h2">
-                                      total {this.getTotalCount()}
-                                  </Typography>
                               </Grid>
-
                           </Grid>
-
+                      </Grid>
+                      <Grid
+                          container
+                          direction="row"
+                          justify="space-around"
+                          alignItems="center"
+                      >
+                          <Grid item xs>
+                              <Typography align='center' variant="h6" component="h2">{this.getTotalCount()}</Typography>
+                              <Typography align='center'>total</Typography>
+                          </Grid>
+                          <Grid item xs>
+                              <Typography align='center' variant="h6" component="h2">{this.getPreviousWeek()}</Typography>
+                              <Typography align='center'>previous week</Typography>
+                          </Grid>
                       </Grid>
                   </Grid>
 
