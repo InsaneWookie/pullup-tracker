@@ -15,6 +15,7 @@ class Main extends React.Component {
         this.handleChangeWeight = this.handleChangeWeight.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleUserDialogClose = this.handleUserDialogClose.bind(this);
+        this.handleSelectedWeek = this.handleSelectedWeek.bind(this);
 
 
     }
@@ -70,10 +71,21 @@ class Main extends React.Component {
         this.setState({name: name, weight: weight});
     }
 
+    handleSelectedWeek(newWeek){
+        console.log(`New week: ${newWeek}`);
+        this.setState({selectedWeek: newWeek});
+    }
+
     render() {
         return (
           <Container >
-              <Grid container spacing={1}>
+
+              <Grid container spacing={1}
+                    justify="center"
+                    alignItems="center">
+                  <Grid item xs={12} align="center">
+                      <DateSelect selectedWeek={this.state.selectedWeek} onChangeSelectedWeek={this.handleSelectedWeek}/>
+                  </Grid>
                   {this.state.users.map((user) => (
                     <Grid key={user.name} item xs={12} sm={4} lg={3}>
                         <User user={user} onClickAddReps={() => this.handleClickOpen(user)} selectedWeek={this.state.selectedWeek}/>

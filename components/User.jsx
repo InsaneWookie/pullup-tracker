@@ -2,6 +2,12 @@ class User extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            // previousWeekCount: User.getPreviousWeek(props),
+            // totalCount : User.getTotalCount(props),
+
+        }
+
 
         // this.handleChange = this.handleChange.bind(this);
         // this.handleChangeWeight = this.handleChangeWeight.bind(this);
@@ -9,14 +15,15 @@ class User extends React.Component {
 
     }
 
-    componentDidMount() {
-        // db.collection("users").doc('1qOY8vqEuHT9dDlUHfuM')
-        //   .get().then((doc) => {
-        //       console.log(doc.data());
-        //   });
 
+    static getDerivedStateFromProps(props, state) {
+        console.log(props, state);
+        return {
+            previousWeekCount: User.getPreviousWeek(props),
+            totalCount : User.getTotalCount(props),
+
+        }
     }
-
 
     handleChange(event) {
         this.setState({name: event.target.value});
@@ -26,18 +33,28 @@ class User extends React.Component {
         this.props.onClickAddReps();
     }
 
-    getTotalCount() {
+    static getTotalCount(props) {
         let count  = 0;
-        for (var week in this.props.user.weekCount) {
-            count += this.props.user.weekCount[week] ? this.props.user.weekCount[week] : 0;
+        for (var week in props.user.weekCount) {
+            count += props.user.weekCount[week] ? props.user.weekCount[week] : 0;
         }
 
         return count;
     }
 
-    getPreviousWeek() {
-        let previousWeek = DateHelper.getPreviousWeekKey()
-        return this.props.user.weekCount[previousWeek] ? this.props.user.weekCount[previousWeek] : 0;
+    static getPreviousWeek(props) {
+        let previousWeek = DateHelper.getPreviousWeekKey(new Date(props.selectedWeek));
+        return props.user.weekCount[previousWeek] ? props.user.weekCount[previousWeek] : 0;
+    }
+
+    static getCurrentWeek(props) {
+        let previousWeek = DateHelper.getStartOfWeekKey(new Date(props.selectedWeek));
+        return props.user.weekCount[previousWeek] ? props.user.weekCount[previousWeek] : 0;
+    }
+
+    static getNextWeek(props) {
+        let previousWeek = DateHelper.getNextWeekKey(new Date(props.selectedWeek));
+        return props.user.weekCount[previousWeek] ? props.user.weekCount[previousWeek] : 0;
     }
 
     render() {
@@ -75,11 +92,11 @@ class User extends React.Component {
                           alignItems="center"
                       >
                           <Grid item xs>
-                              <Typography align='center' variant="h6" component="h2">{this.getTotalCount()}</Typography>
+                              <Typography align='center' variant="h6" component="h2">{this.state.totalCount}</Typography>
                               <Typography align='center'>total</Typography>
                           </Grid>
                           <Grid item xs>
-                              <Typography align='center' variant="h6" component="h2">{this.getPreviousWeek()}</Typography>
+                              <Typography align='center' variant="h6" component="h2">{this.state.previousWeekCount}</Typography>
                               <Typography align='center'>previous week</Typography>
                           </Grid>
                       </Grid>
