@@ -1,26 +1,17 @@
 
 class DateHelper {
 
-
-    static getMonday(d) {
-        d = new Date(d);
-        var day = d.getDay(),
-          diff = d.getDate() - day + (day === 0 ? -6:1); // adjust when day is sunday
-        return new Date(d.setDate(diff));
-    }
+    static DATE_KEY_FORMAT = 'YYYY-MM-DD';
 
     static getStartOfWeekKey(currentDate){
-        const startOfWeek = DateHelper.getMonday(currentDate ? currentDate : new Date());
-        return startOfWeek.getFullYear() +  "-" + (startOfWeek.getMonth() + 1) + "-"+ startOfWeek.getDate();
+        return moment(currentDate ? currentDate : new Date()).day(1).format(DateHelper.DATE_KEY_FORMAT)
     }
 
     static getPreviousWeekKey(fromDate){
-        const startOfWeek = DateHelper.getMonday(fromDate ? fromDate : new Date());
-        return startOfWeek.getFullYear() +  "-" + (startOfWeek.getMonth() + 1) + "-"+ (startOfWeek.getDate() - 7);
+        return moment(fromDate ? fromDate : new Date()).subtract(7, 'days').format(DateHelper.DATE_KEY_FORMAT);
     }
 
     static getNextWeekKey(fromDate){
-        const startOfWeek = DateHelper.getMonday(fromDate ? fromDate : new Date());
-        return startOfWeek.getFullYear() +  "-" + (startOfWeek.getMonth() + 1) + "-"+ (startOfWeek.getDate() + 7);
+        return moment(fromDate ? fromDate : new Date()).add(7, 'days').format(DateHelper.DATE_KEY_FORMAT);
     }
 }
