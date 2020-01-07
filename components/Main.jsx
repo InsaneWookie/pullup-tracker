@@ -20,6 +20,16 @@ class Main extends React.Component {
 
     }
 
+    getUserTotalCount(user) {
+        let total = 0;
+        for (var key in user.weekCount) {
+            if (user.weekCount.hasOwnProperty(key)) {
+                total += parseInt(key);
+            }
+        }
+
+        return total;
+    }
 
     componentDidMount() {
         db.collection("users")
@@ -33,6 +43,10 @@ class Main extends React.Component {
               users.sort((user1, user2) => {
                   let user1Count = typeof user1.weekCount[this.state.selectedWeek] !== 'undefined' ? user1.weekCount[this.state.selectedWeek] : 0;
                   let user2Count = typeof user2.weekCount[this.state.selectedWeek] !== 'undefined' ? user2.weekCount[this.state.selectedWeek] : 0;
+
+                  if (user1Count == 0 && user2Count == 0) {
+                      return this.getUserTotalCount(user2) - this.getUserTotalCount(user1);
+                  }
                   return user2Count - user1Count;
               });
               console.log(users);
